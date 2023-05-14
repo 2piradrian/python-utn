@@ -1,6 +1,5 @@
 vehicleID = input("Ingese la patente del vehiculo correspondiente: ")
 # se realiza la verificacion antes de realizar la siguiente consulta por temas de User Experience.
-# creemos que es mejor que el usuario sepa que ingreso mal la patente antes de que se le solicite el tipo de vehiculo.
 
 # la eliminacion de esta seccion del codigo se debe al cambio de consigna
 #if len(vehicleID) < 7 or len(vehicleID) > 7:
