@@ -142,8 +142,10 @@ def readPlate(plateList):
     totalPlates = carg + cchi + cpar + curu + cbra + cbol + cotr
 
     porc = calculatePercent(totalPlates, cotr)
-
-    prom = round(argToBrazilDistanceCounter / argToBrazilPlateCounter, 2)        
+    if argToBrazilPlateCounter == 0:
+        prom = 0
+    else:
+        prom = round(argToBrazilDistanceCounter / argToBrazilPlateCounter, 2)
 
     print('(r1) - Idioma a usar en los informes:', idioma)
     print()
