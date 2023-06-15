@@ -65,9 +65,9 @@ def handleLine(line):
 # verifica el idioma
 def checkLanguage(line):
     if("PT" in line):
-        print("Portugués")
+        return "Portugués"
     elif ("ES" in line):
-        print ("Español")
+        return "Español"
 
 def calculatePercent(totalPlates, other):
     return round((other * 100) / totalPlates, 2)
@@ -76,25 +76,25 @@ def calculatePercent(totalPlates, other):
 
 # lee patentes linea por linea
 def readPlate(plateList):
-    language = ""
+    idioma = ""
     isFirstLine = True
     isFirstPlate = True
-    firstPlate = ""
-    firstPlateCounter = 0
-    finalAmountList = 0
-    higgestAmount = 0
-    higgestAmountPlate = ""
+    primera = ""
+    cpp = 0
+    imp_acu_total = 0
+    mayimp = 0
+    maypat = ""
     argToBrazilPlateCounter = 0
     argToBrazilDistanceCounter = 0
 
-    arg, chi, par, uru, bra, bol, oth = 0, 0, 0, 0, 0, 0, 0
+    carg, cchi, cpar, curu, cbra, cbol, cotr = 0, 0, 0, 0, 0, 0, 0
 
     while True:
         line = plateList.readline()
         # < ---- Verificando lineas ---- > #
         if isFirstLine:
             isFirstLine = False
-            language = checkLanguage(line)
+            idioma = checkLanguage(line)
             continue
 
         if line == "":
@@ -104,48 +104,48 @@ def readPlate(plateList):
         plate, vehicleType, payment, country, distance = handleLine(line)
         vehicleIDCountry = checkPlate(plate)
         ticketPrice = checkTicketPrice(int(country))
-        basic = checkDiscount(int(vehicleType), int(payment), int(ticketPrice))
+        basic = int(checkDiscount(int(vehicleType), int(payment), int(ticketPrice)))
 
-        finalAmountList += basic
+        imp_acu_total += basic
 
-        if basic > higgestAmount:
-            higgestAmount = basic
-            higgestAmountPlate = plate
+        if basic > mayimp:
+            mayimp = basic
+            maypat = plate
 
         if isFirstPlate:
             isFirstPlate = False
-            firstPlate = plate
+            primera = plate
 
-        if plate == firstPlate:
-            firstPlateCounter += 1
+        if plate == primera:
+            cpp += 1
 
         if vehicleIDCountry == "Argentina":
-            arg += 1
+            carg += 1
         elif vehicleIDCountry == "Chile":
-            chi += 1
+            cchi += 1
         elif vehicleIDCountry == "Paraguay":
-            par += 1
+            cpar += 1
         elif vehicleIDCountry == "Uruguay":
-            uru += 1
+            curu += 1
         elif vehicleIDCountry == "Brasil":
-            bra += 1
+            cbra += 1
         elif vehicleIDCountry == "Bolivia":
-            bol += 1
+            cbol += 1
         else:
-            oth += 1
+            cotr += 1
 
         if (vehicleIDCountry == "Argentina" and int(country) == 2):
             argToBrazilPlateCounter += 1
             argToBrazilDistanceCounter += int(distance)
 
 
-    totalPlates = arg + chi + par + uru + bra + bol + oth
+    totalPlates = carg + cchi + cpar + curu + cbra + cbol + cotr
 
-    otherPercent = calculatePercent(totalPlates, oth)
+    porc = calculatePercent(totalPlates, cotr)
 
-    argToBrazilAvarage = round(argToBrazilDistanceCounter / argToBrazilPlateCounter, 2)        
+    prom = round(argToBrazilDistanceCounter / argToBrazilPlateCounter, 2)        
 
-    print('(r1) - Idioma a usar en los informes:', language)
+    print('(r1) - Idioma a usar en los informes:', idioma)
     print()
     print('(r2) - Cantidad de patentes de Argentina:', carg)
     print('(r2) - Cantidad de patentes de Bolivia:', cbol)
